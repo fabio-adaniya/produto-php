@@ -1,0 +1,12 @@
+.conteudo {
+    margin: 2%;
+}
+
+form {
+    margin: 0 auto;
+    width: 400px;
+}
+
+#btnSalvar {
+    text-align: right;
+}
