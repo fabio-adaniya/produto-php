@@ -4,7 +4,7 @@ Aplicação de produto com CRUD (create, read, update e delete).<br><br>
 Banco de dados para guardar todos os registros cadastrados: MySQL.<br>
 Linguagem de programação para guardar as informações no banco de dados: PHP.<br>
 O arquivo <a href="sql.txt">sql.txt</a> possui os comandos que precisam ser rodados no MySQL.<br>
-Os parâmetros para conectar no banco dados está no arquivo <a href="conexao.php">conexao.php</a>
+Os parâmetros para conectar no banco dados estão no arquivo <a href="conexao.php">conexao.php</a>
 
 Tecnologias utilizadas:
 
