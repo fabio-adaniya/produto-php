@@ -1,7 +1,7 @@
 <?php
     function salvar($con, $id, $codigo, $descricao)
     {
-        if ($id != "")
+        if($id)
             $sql = "UPDATE PRODUTO SET CODIGO = '$codigo', DESCRICAO = '$descricao' WHERE ID = $id";
         else
             $sql = "INSERT INTO PRODUTO(CODIGO, DESCRICAO) VALUES('$codigo', '$descricao')";
@@ -12,7 +12,7 @@
 
     function localizar($con, $id)
     {
-        if ($id > 0)
+        if($id > 0)
         {
             $registros = mysqli_query($con, "SELECT * FROM PRODUTO WHERE ID = $id");
             return mysqli_fetch_array($registros);
