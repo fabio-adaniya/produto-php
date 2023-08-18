@@ -1,10 +1,17 @@
 # Produto PHP
 
-Aplicação de produto utilizando o padrão CRUD (create, read, update e delete).<br><br>
-O arquivo <a href="sql.txt">sql.txt</a> possui os comandos que precisam ser rodados no MySQL.<br>
+Sistema de cadastro e consulta de produtos, com as funcionalidades de:
+
+- Cadastrar
+- Editar
+- Deletar
+- Consultar
+
+O arquivo <a href="sql.txt">sql.txt</a> possui os comandos que precisam ser rodados no MySQL.
+
 Os parâmetros para conectar no banco dados estão no arquivo <a href="conexao.php">conexao.php</a>
 
-Tecnologias utilizadas:
+### Tecnologias utilizadas
 
 <div display="inline">
     <img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white">
