@@ -8,23 +8,41 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
     <body class="bg-light">
+        <h4 class="text-center pt-4">Listagem de produtos</h4>
+        <div class="card m-3 bg-light border-0">
+            <div class="card-body">
+                <form action="" method="GET" class="d-flex justify-content-center flex-wrap">
+                    <div class="d-flex flex-wrap" style="width: 400px">
+                        <label for="">Pesquisar por:</label>
+                        <input type="text" name="pesquisar" class="form-control-sm ms-2 flex-fill" value="<?= isset($_GET["pesquisar"]) ? $_GET["pesquisar"] : '' ?>">
+                    </div>
+                    <button type="submit" class="btn btn-success btn-sm ms-2">
+                        <i class="fa-solid fa-magnifying-glass"></i> Pesquisar
+                    </button>
+                </form>
+            </div>
+        </div>
         <div class="card m-3">
             <div class="card-body">
-                <div class="d-flex mb-3 flex-wrap">
-                    <h4 class="text-center me-auto">Listagem de produtos</h4>
-                    <button type="Button" class="btn btn-primary" id="btnCadastrar" onClick="abrirTela()">
-                        <i class="fa-solid fa-plus"></i> Cadastrar
+                <div class="d-flex flex-wrap">
+                    <button type="Button" class="btn btn-primary btn-sm ms-auto" id="btnCadastrar" onClick="abrirTela()">
+                        <i class="fa-solid fa-plus"></i> Cadastrar Produto
                     </button>
                 </div>
                 <?php
                     require_once "conexao.php";
 
-                    $registros = mysqli_query($con, "SELECT * FROM PRODUTO");
+                    $filtro = "";
+
+                    if(isset($_GET["pesquisar"]))
+                        $filtro = "WHERE CODIGO LIKE '%".$_GET["pesquisar"]."%' OR DESCRICAO LIKE '%".$_GET["pesquisar"]."%'";
+
+                    $registros = mysqli_query($con, "SELECT * FROM PRODUTO ".$filtro);
                     $linhas = mysqli_num_rows($registros);
 
                     echo "<br>";
                     echo "<div class='table-responsive'>";
-                        echo "<table class='table'>";
+                        echo "<table class='table table-sm'>";
                             echo "<thead>";
                                 echo "<tr>";
                                     echo "<th style='width:1%'>ID</th>";
@@ -50,12 +68,12 @@
                                         echo "<td>$codigo</td>";
                                         echo "<td>$descricao</td>";
                                         echo "<td>";
-                                            echo "<button type='button' class='btn btn-warning d-flex' onClick='abrirTela($id)'>";
+                                            echo "<button type='button' class='btn btn-warning btn-sm d-flex' onClick='abrirTela($id)'>";
                                                 echo "<i class='fa-regular fa-pen-to-square p-1'></i> Editar";
                                             echo "</button>";
                                         echo "</td>";
                                         echo "<td>";
-                                            echo "<button type='button' class='btn btn-danger d-flex' onClick='deletar($id)'>";
+                                            echo "<button type='button' class='btn btn-danger btn-sm d-flex' onClick='deletar($id)'>";
                                                 echo "<i class='fa-solid fa-trash-can p-1'></i> Deletar";
                                             echo "</button>";
                                         echo "</td>";
@@ -69,9 +87,9 @@
                     echo "</div>";
 
                     if ($linhas > 0)
-                        echo "<center class='alert alert-secondary fw-bold'>Total de registros: $linhas</center>";
+                        echo "<div class='text-success text-center fw-bold'>Total de registros: $linhas</div>";
                     else
-                        echo "<div class='alert alert-warning'>Nenhum produto foi localizado!</div>";
+                        echo "<div class='text-center fw-bold'>Nenhum produto foi localizado!</div>";
                 ?>
             </div>
         </div>

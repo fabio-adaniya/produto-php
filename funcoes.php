@@ -24,4 +24,14 @@
                 "descricao" => ""
             ];
     }
+
+    function old($field, $value = null)
+    {
+        if(isset($_POST[$field]))
+            return $_POST[$field];
+        else if($value)
+            return $value;
+        else
+            return "";
+    }
 ?>

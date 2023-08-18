@@ -60,32 +60,35 @@
     <body class="bg-light">
         <div class="d-flex justify-content-center vh-100 align-items-center">
             <div class="card m-3" style="width: 500px">
+                <div class="card-header bg-secondary fw-bold text-center text-white">
+                    <?php echo $titulo." produto"; ?>
+                </div>
                 <div class="card-body">
-                    <?php
-                        echo "<p class='fs-5 fw-bold text-center'>".$titulo." produto</p>";
-                    ?>
                     <form method="POST" action="formProduto.php">
                         <input type="hidden" id="input-id" name="id" value="<?= $id ?? '' ?>">
                         <div class="mb-3">
-                            <label class="form-label" for="input-codigo">Código*</label>
-                            <input type="text" id="input-codigo" name="codigo" class="form-control" value="<?= $codigo ?? '' ?>" autofocus>
+                            <label class="form-label" for="input-codigo">Código <span class="text-danger fw-bold">*</span></label>
+                            <input type="text" id="input-codigo" name="codigo" class="form-control" value="<?= old('codigo', $codigo) ?>" autofocus>
                             <?php
                                 if($codigoError)
                                     echo "<p class='text-danger mt-1'>$codigoError</p>";
                             ?>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="input-descricao">Descrição*</label>
-                            <input type="text" id="input-descricao" name="descricao" class="form-control" value="<?= $descricao ?? '' ?>">
+                            <label class="form-label" for="input-descricao">Descrição <span class="text-danger fw-bold">*</span></label>
+                            <input type="text" id="input-descricao" name="descricao" class="form-control" value="<?= old('descricao', $descricao) ?>">
                             <?php
                                 if($descricaoError)
                                     echo "<p class='text-danger mt-1'>$descricaoError</p>";
                             ?>
                         </div>
-                        <button type="submit" class="btn btn-primary d-flex ms-auto">
+                        <button type="submit" class="btn btn-primary btn-sm d-flex ms-auto">
                             <i class="fa-regular fa-floppy-disk p-1"></i> Salvar
                         </button>
                     </form>
+                </div>
+                <div class="card-footer">
+                    (<span class="text-danger fw-bold">*</span>) Campos de preenchimento obrigatório
                 </div>
             </div>
         </div>
