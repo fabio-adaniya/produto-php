@@ -32,13 +32,15 @@
                 <?php
                     require_once "conexao.php";
 
-                    $filtro = "";
+                    $produtos = $notOrm->produto();
+                    $produtos_count = count($produtos);
 
                     if(isset($_GET["pesquisar"]))
-                        $filtro = "WHERE CODIGO LIKE '%".$_GET["pesquisar"]."%' OR DESCRICAO LIKE '%".$_GET["pesquisar"]."%'";
-
-                    $registros = mysqli_query($con, "SELECT * FROM PRODUTO ".$filtro);
-                    $linhas = mysqli_num_rows($registros);
+                    {
+                        $pesquisar = $_GET["pesquisar"];
+                        $produtos = $produtos->where("CODIGO LIKE '%".$pesquisar."%'");
+                        $produtos = $produtos->or("DESCRICAO LIKE '%".$pesquisar."%'");
+                    }
 
                     echo "<br>";
                     echo "<div class='table-responsive'>";
@@ -54,40 +56,31 @@
                             echo "</thead>";
                             echo "<tbody>";
 
-                                $contador = 0;
-
-                                while ($contador < $linhas)
+                                foreach($produtos as $produto)
                                 {
-                                    $produto = mysqli_fetch_array($registros);
-                                    $id = $produto["id"];
-                                    $codigo = $produto["codigo"];
-                                    $descricao = $produto["descricao"];
-
                                     echo "<tr>";
-                                        echo "<td>$id</td>";
-                                        echo "<td>$codigo</td>";
-                                        echo "<td>$descricao</td>";
+                                        echo "<td>".$produto["id"]."</td>";
+                                        echo "<td>".$produto["codigo"]."</td>";
+                                        echo "<td>".$produto["descricao"]."</td>";
                                         echo "<td>";
-                                            echo "<button type='button' class='btn btn-warning btn-sm d-flex' onClick='abrirTela($id)'>";
+                                            echo "<button type='button' class='btn btn-warning btn-sm d-flex' onClick='abrirTela(".$produto["id"].")'>";
                                                 echo "<i class='fa-regular fa-pen-to-square p-1'></i> Editar";
                                             echo "</button>";
                                         echo "</td>";
                                         echo "<td>";
-                                            echo "<button type='button' class='btn btn-danger btn-sm d-flex' onClick='deletar($id)'>";
+                                            echo "<button type='button' class='btn btn-danger btn-sm d-flex' onClick='deletar(".$produto["id"].")'>";
                                                 echo "<i class='fa-solid fa-trash-can p-1'></i> Deletar";
                                             echo "</button>";
                                         echo "</td>";
                                     echo "</tr>";
-
-                                    $contador++;
                                 }
 
                             echo "</tbody>";
                         echo "</table>";
                     echo "</div>";
 
-                    if ($linhas > 0)
-                        echo "<div class='text-success text-center fw-bold'>Total de registros: $linhas</div>";
+                    if ($produtos_count > 0)
+                        echo "<div class='text-success text-center fw-bold'>Total de registros: $produtos_count</div>";
                     else
                         echo "<div class='text-center fw-bold'>Nenhum produto foi localizado!</div>";
                 ?>

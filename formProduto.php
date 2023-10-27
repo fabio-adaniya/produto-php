@@ -27,18 +27,18 @@
         }
 
         if($salvar)
-            salvar($con, $_POST["id"], $_POST["codigo"], $_POST["descricao"]);
+            salvar($notOrm, $_POST["id"], $_POST["codigo"], $_POST["descricao"]);
     }
     else
     {
         if(isset($_GET["id"]))
         {
-            $produto = localizar($con, $_GET["id"]);
+            $produto = localizar($notOrm, $_GET["id"]);
 
             if($produto)
             {
                 if($produto["id"])
-                    $titulo =  'Editar';
+                    $titulo = 'Editar';
 
                 $id = $produto["id"] ?? '';
                 $codigo = $produto["codigo"] ?? '';
