@@ -6,8 +6,7 @@ CRUD de produtos
 
 - Copiar o arquivo ".env.example" para ".env"
 - Configurar as variáveis do arquivo ".env" para se conectar ao banco de dados
-
-Rodar o script do arquivo: <a href="sql.txt">sql.txt</a>
+- Rodar o script do arquivo: <a href="sql.txt">sql.txt</a>
 
 ### Tecnologias utilizadas
 
