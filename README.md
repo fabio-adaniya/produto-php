@@ -1,15 +1,13 @@
 # Produto PHP
 
-Sistema de cadastro e consulta de produtos, com as funcionalidades de:
+CRUD de produtos
 
-- Cadastrar
-- Editar
-- Deletar
-- Consultar
+<hr>
 
-O arquivo <a href="sql.txt">sql.txt</a> possui os comandos que precisam ser rodados no MySQL.
+- Copiar o arquivo ".env.example" para ".env"
+- Configurar as variáveis do arquivo ".env" para se conectar ao banco de dados
 
-Os parâmetros para conectar no banco dados estão no arquivo <a href="conexao.php">conexao.php</a>
+Rodar o script do arquivo: <a href="sql.txt">sql.txt</a>
 
 ### Tecnologias utilizadas
 
