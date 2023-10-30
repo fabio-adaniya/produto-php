@@ -1,10 +1,10 @@
 <?php
-    function salvar($notOrm, $id, $codigo, $descricao)
+    function salvar($notOrm, $produto)
     {
-        if($id)
-            $notOrm->produto()->where('ID = '.$id)->update(array("codigo"=>$codigo,"descricao"=>$descricao));
+        if($produto['id'])
+            $notOrm->produto()->where('ID = '.$produto['id'])->update(array('codigo' => $produto['codigo'], 'descricao' => $produto['descricao']));
         else
-            $notOrm->produto()->insert(array("codigo"=>$codigo,"descricao"=>$descricao));
+            $notOrm->produto()->insert(array('codigo' => $produto['codigo'], 'descricao' => $produto['descricao']));
 
         header("location:index.php");
     }
@@ -13,15 +13,5 @@
     {
         $produto = $notOrm->produto()->where('ID = '.$id)->fetch();
         return $produto;
-    }
-
-    function old($field, $value = null)
-    {
-        if(isset($_POST[$field]))
-            return $_POST[$field];
-        else if($value)
-            return $value;
-        else
-            return "";
     }
 ?>

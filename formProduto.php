@@ -1,97 +1,50 @@
 <?php
+    require_once "vendor/autoload.php";
     require_once "conexao.php";
     require_once "funcoes.php";
 
-    $codigoError = '';
-    $descricaoError = '';
-    $titulo = 'Cadastrar';
-    $produto = null;
-    $id = '';
-    $codigo = '';
-    $descricao = '';
+    $loader = new \Twig\Loader\FilesystemLoader('templates');
+    $twig = new \Twig\Environment($loader);
+    $template = $twig->load('formProduto.html.twig');
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST")
+    $titulo = 'Cadastrar';
+    $errors = [];
+    $produto = [];
+
+    if ($_SERVER['REQUEST_METHOD'] == "POST")
     {
         $salvar = true;
 
-        if(!trim($_POST["codigo"]))
-        { 
-            $codigoError = 'Código é obrigatório';
+        if(!trim($_POST['codigo']))
+        {
+            $errors['codigo'] = 'Código é obrigatório';
             $salvar = false;
         }
 
-        if(!trim($_POST["descricao"]))
+        if(!trim($_POST['descricao']))
         {
-            $descricaoError = 'Descrição é obrigatório';
+            $errors['descricao'] = 'Descrição é obrigatório';
             $salvar = false;
         }
+
+        $produto['id'] = $_POST['id'];
+        $produto['codigo'] = $_POST['codigo'];
+        $produto['descricao'] = $_POST['descricao'];
 
         if($salvar)
-            salvar($notOrm, $_POST["id"], $_POST["codigo"], $_POST["descricao"]);
+            salvar($notOrm, $produto);
     }
     else
     {
-        if(isset($_GET["id"]))
+        if(isset($_GET['id']))
         {
-            $produto = localizar($notOrm, $_GET["id"]);
+            $produto = localizar($notOrm, $_GET['id']);
 
             if($produto)
-            {
-                if($produto["id"])
+                if($produto['id'])
                     $titulo = 'Editar';
-
-                $id = $produto["id"] ?? '';
-                $codigo = $produto["codigo"] ?? '';
-                $descricao = $produto["descricao"] ?? '';
-            }
         }
     }
-?>
 
-<!DOCTYPE html>
-<html lang="pt-br">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title><?= $titulo ?> produto</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    </head>
-    <body class="bg-light">
-        <div class="d-flex justify-content-center vh-100 align-items-center">
-            <div class="card m-3" style="width: 500px">
-                <div class="card-header bg-secondary fw-bold text-center text-white">
-                    <?php echo $titulo." produto"; ?>
-                </div>
-                <div class="card-body">
-                    <form method="POST" action="formProduto.php">
-                        <input type="hidden" id="input-id" name="id" value="<?= $id ?? '' ?>">
-                        <div class="mb-3">
-                            <label class="form-label" for="input-codigo">Código <span class="text-danger fw-bold">*</span></label>
-                            <input type="text" id="input-codigo" name="codigo" class="form-control" value="<?= old('codigo', $codigo) ?>" autofocus>
-                            <?php
-                                if($codigoError)
-                                    echo "<p class='text-danger mt-1'>$codigoError</p>";
-                            ?>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="input-descricao">Descrição <span class="text-danger fw-bold">*</span></label>
-                            <input type="text" id="input-descricao" name="descricao" class="form-control" value="<?= old('descricao', $descricao) ?>">
-                            <?php
-                                if($descricaoError)
-                                    echo "<p class='text-danger mt-1'>$descricaoError</p>";
-                            ?>
-                        </div>
-                        <button type="submit" class="btn btn-primary btn-sm d-flex ms-auto">
-                            <i class="fa-regular fa-floppy-disk p-1"></i> Salvar
-                        </button>
-                    </form>
-                </div>
-                <div class="card-footer">
-                    (<span class="text-danger fw-bold">*</span>) Campos de preenchimento obrigatório
-                </div>
-            </div>
-        </div>
-        <script src="main.js"></script>
-    </body>
-</html>
+    echo $template->render(['titulo' => $titulo, 'errors' => $errors, 'produto' => $produto]);
+?>
