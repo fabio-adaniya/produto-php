@@ -4,9 +4,14 @@
 {% block body %}
     <div class="d-flex justify-content-center vh-100 align-items-center">
         <div class="card m-3" style="width: 500px">
-            <div class="card-header bg-secondary fw-bold text-center text-white">{{ titulo }} produto</div>
             <div class="card-body">
-                <form method="POST" action="formProduto.php">
+                <div class="d-flex justify-content-center mb-3">
+                    <div class="fw-bold">{{ titulo }} Produto</div>
+                </div>
+                <form method="POST" action="/" class="mb-3">
+                    {% if (method == 'PUT') %}
+                        <input type="hidden" name="_method" value="PUT">
+                    {% endif %}
                     <input type="hidden" id="input-id" name="id" value="{{ produto['id'] }}">
                     <div class="mb-3">
                         <label class="form-label" for="input-codigo">Código <span class="text-danger fw-bold">*</span></label>
@@ -26,9 +31,9 @@
                         <i class="fa-regular fa-floppy-disk p-1"></i> Salvar
                     </button>
                 </form>
-            </div>
-            <div class="card-footer">
-                (<span class="text-danger fw-bold">*</span>) Campos de preenchimento obrigatório
+                <div>
+                    (<span class="text-danger fw-bold">*</span>) Campos de preenchimento obrigatório
+                </div>
             </div>
         </div>
     </div>

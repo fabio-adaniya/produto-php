@@ -16,14 +16,17 @@
             </form>
         </div>
     </div>
-    <div class="card m-3">
+    <div class="card m-3 border-0 bg-transparent">
         <div class="card-body">
             <div class="d-flex flex-wrap">
-                <button type="Button" class="btn btn-primary btn-sm ms-auto" id="btnCadastrar" onClick="abrirTela()">
-                    <i class="fa-solid fa-plus"></i> Cadastrar Produto
-                </button>
+                <a href="/create" class="btn btn-primary btn-sm ms-auto">
+                    <i class="fa-solid fa-plus"></i> Cadastrar
+                </a>
             </div>
-            <br>
+        </div>
+    </div>
+    <div class="card m-3">
+        <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-sm">
                     <thead>
@@ -42,14 +45,17 @@
                                 <td>{{ produto['codigo'] }}</td>
                                 <td>{{ produto['descricao'] }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-warning btn-sm d-flex" onClick="abrirTela({{ produto['id'] }})">
+                                    <a href="/edit/{{ produto['id'] }}" class="btn btn-warning btn-sm d-flex">
                                         <i class="fa-regular fa-pen-to-square p-1"></i> Editar
-                                    </button>
+                                    </a>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-danger btn-sm d-flex" onClick="deletar({{ produto['id'] }})">
-                                        <i class="fa-solid fa-trash-can p-1"></i> Deletar
-                                    </button>
+                                    <form action="/delete/{{ produto['id'] }}" method="POST">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <button type="submit" class="btn btn-danger btn-sm d-flex">
+                                            <i class="fa-solid fa-trash-can p-1"></i> Deletar
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         {% endfor %}
