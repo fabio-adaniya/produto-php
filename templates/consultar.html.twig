@@ -1,28 +1,24 @@
 {% extends "layout.html.twig" %}
-{% block title %}Listagem de produtos{% endblock %}
+{% block title %}Consultar Produtos{% endblock %}
 
 {% block body %}
-    <h4 class="text-center pt-4">Listagem de produtos</h4>
     <div class="card m-3 bg-light border-0">
         <div class="card-body">
             <form action="" method="GET" class="d-flex justify-content-center flex-wrap">
-                <div class="d-flex flex-wrap" style="width: 400px">
-                    <label for="">Pesquisar por:</label>
-                    <input type="text" name="pesquisar" class="form-control-sm ms-2 flex-fill" value="{{ pesquisar }}">
+                <div class="d-flex gap-2 flex-wrap" style="width: 700px">
+                    <div>
+                        <label>Pesquisar por:</label>
+                    </div>
+                    <div class="flex-fill">
+                        <input type="text" name="pesquisar" class="form-control" value="{{ pesquisar }}">
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa-solid fa-magnifying-glass"></i> Pesquisar
+                        </button>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-success btn-sm ms-2">
-                    <i class="fa-solid fa-magnifying-glass"></i> Pesquisar
-                </button>
             </form>
-        </div>
-    </div>
-    <div class="card m-3 border-0 bg-transparent">
-        <div class="card-body">
-            <div class="d-flex flex-wrap">
-                <a href="/create" class="btn btn-primary btn-sm ms-auto">
-                    <i class="fa-solid fa-plus"></i> Cadastrar
-                </a>
-            </div>
         </div>
     </div>
     <div class="card m-3">
