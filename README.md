@@ -1,19 +1,19 @@
-# Produto PHP
+### Building and running your application
 
-CRUD de produtos
+When you're ready, start your application by running:
+`docker compose up --build`.
 
-<hr>
+Your application will be available at http://localhost:8000.
 
-- Copiar o arquivo ".env.example" para ".env"
-- Configurar as variáveis do arquivo ".env" para se conectar ao banco de dados
-- Rodar o script do arquivo: <a href="script.sql">script.sql</a>
+### Deploying your application to the cloud
 
-### Tecnologias utilizadas
+First, build your image, e.g.: `docker build -t myapp .`.
+If your cloud uses a different CPU architecture than your development
+machine (e.g., you are on a Mac M1 and your cloud provider is amd64),
+you'll want to build the image for that platform, e.g.:
+`docker build --platform=linux/amd64 -t myapp .`.
 
-<div display="inline">
-    <img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white">
-    <img src="https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white">
-    <img src="https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white">
-    <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
-    <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
-</div>
+Then, push it to your registry, e.g. `docker push myregistry.com/myapp`.
+
+Consult Docker's [getting started](https://docs.docker.com/go/get-started-sharing/)
+docs for more detail on building and pushing.
