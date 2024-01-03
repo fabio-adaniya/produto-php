@@ -1,33 +1,41 @@
 <?php
-    require_once __DIR__ . '\vendor\autoload.php';
-    require_once __DIR__ . '\controllers\ProdutoController.php';
-    
-    $klein = new \Klein\Klein();
-    
-    $klein->respond('GET', '/', function(){
-        $controller = new ProdutoController();
-        $controller->index();
-    });
-    $klein->respond('GET', '/create', function(){
-        $controller = new ProdutoController();
-        $controller->create();
-    });
-    $klein->respond('GET', '/edit/[:id]', function($request){
-        $controller = new ProdutoController();
-        $controller->edit($request->id);
-    });
-    $klein->respond('POST', '/', function($request){
-        $controller = new ProdutoController();
-        $controller->store($request);
-    });
-    $klein->respond('PUT', '/', function($request){
-        $controller = new ProdutoController();
-        $controller->update($request);
-    });
-    $klein->respond('DELETE', '/delete/[:id]', function($request){
-        $controller = new ProdutoController();
-        $controller->delete($request);
-    });
-    
-    $klein->dispatch();
+    require_once __DIR__ . '/controllers/ProdutoController.php';
+
+    $produtoController = new ProdutoController();
+
+    if(isset($_POST['create']))
+        $produtoController->create();
+    else if(isset($_POST['store']))
+    {
+        $values = [
+            'codigo' => isset($_POST['codigo']) ? $_POST['codigo'] : null,
+            'descricao' => isset($_POST['descricao']) ? $_POST['descricao'] : null
+        ];
+
+        $produtoController->store($values);
+    }
+    else if(isset($_POST['edit']))
+    {
+        $id = isset($_POST['id']) ? $_POST['id'] : null;
+
+        $produtoController->edit($id);
+    }
+    else if(isset($_POST['update']))
+    {
+        $values = [
+            'id' => isset($_POST['id']) ? $_POST['id'] : null,
+            'codigo' => isset($_POST['codigo']) ? $_POST['codigo'] : null,
+            'descricao' => isset($_POST['descricao']) ? $_POST['descricao'] : null
+        ];
+
+        $produtoController->update($values);
+    }
+    else if(isset($_POST['delete']))
+    {
+        $id = isset($_POST['id']) ? $_POST['id'] : null;
+
+        $produtoController->delete($id);
+    }
+    else
+        $produtoController->index();
 ?>

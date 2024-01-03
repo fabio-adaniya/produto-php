@@ -1,14 +1,17 @@
 <?php
-    require_once __DIR__ . '\vendor\autoload.php';
-    require_once __DIR__ . '\NotORM.php';
+    require_once __DIR__ . '/vendor/autoload.php';
+    require_once __DIR__ . '/NotORM.php';
 
     class Conexao{
         public function conectar()
         {
-            $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-            $dotenv->load();
+            define('DB_HOST', 'host.docker.internal');
+            define('DB_PORT', '3306');
+            define('DB_DATABASE', 'produto_php');
+            define('DB_USERNAME', 'root');
+            define('DB_PASSWORD', '');
 
-            $conexao = new PDO("mysql:host=".$_ENV['DB_HOST'].";dbname=".$_ENV['DB_DATABASE'].";", $_ENV['DB_USERNAME'], $_ENV['DB_PASSWORD']);
+            $conexao = new PDO('mysql:host='.DB_HOST.';port='.DB_PORT.';dbname='.DB_DATABASE, DB_USERNAME, DB_PASSWORD);
             $notOrm = new NotORM($conexao);
             return $notOrm;
         }

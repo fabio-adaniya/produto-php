@@ -8,9 +8,11 @@
                 <div class="d-flex justify-content-center mb-3">
                     <div class="fw-bold">{{ titulo }} Produto</div>
                 </div>
-                <form method="POST" action="/" class="mb-3">
+                <form method="POST" action="index.php" class="mb-3">
                     {% if (method == 'PUT') %}
-                        <input type="hidden" name="_method" value="PUT">
+                        <input type="hidden" name="update" value="true">
+                    {% else %}
+                        <input type="hidden" name="store" value="true">
                     {% endif %}
                     <input type="hidden" id="input-id" name="id" value="{{ produto['id'] }}">
                     <div class="mb-3">

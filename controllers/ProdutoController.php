@@ -1,22 +1,18 @@
 <?php
-    require_once __DIR__ . '\..\vendor\autoload.php';
-    require_once __DIR__ . '\..\models\ProdutoModel.php'; 
-    require_once __DIR__ . '\..\funcoes.php';
+    require_once __DIR__ . '/../vendor/autoload.php';
+    require_once __DIR__ . '/../models/ProdutoModel.php'; 
 
     class ProdutoController
     {
         private $produto_model;
         private $twig;
-        private $funcoes;
 
         public function __construct()
         {
             $this->produto_model = new ProdutoModel();
 
-            $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '\..\templates');
+            $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../templates');
             $this->twig = new \Twig\Environment($loader);
-
-            $this->funcoes = new Funcoes();
         }
 
         public function index()
@@ -61,7 +57,7 @@
             if(!(count($errors) > 0))
             {
                 $this->produto_model->store($produto);
-                $this->funcoes->redirect('/');
+                $this->index();
             }
             else
                 $this->create($errors, $produto);
@@ -75,26 +71,26 @@
             if(!(count($errors) > 0))
             {
                 $this->produto_model->update($produto);
-                $this->funcoes->redirect('/');
+                $this->index();
             }
             else
-                $this->edit($request->id, $errors, $produto);
+                $this->edit($request['id'], $errors, $produto);
         }
 
         public function delete($request)
         {
-            $this->produto_model->delete($request->id);
-            $this->funcoes->redirect('/');
+            $this->produto_model->delete($request);
+            $this->index();
         }
 
         public function validate_request($request)
         {
             $errors = [];
 
-            if(!trim($request->codigo))
+            if(!trim($request['codigo']))
                 $errors['codigo'] = 'Código é obrigatório';
 
-            if(!trim($request->descricao))
+            if(!trim($request['descricao']))
                 $errors['descricao'] = 'Descrição é obrigatório';
 
             return $errors;
@@ -104,9 +100,9 @@
         {
             $produto = [];
 
-            $produto['id'] = $request->id;
-            $produto['codigo'] = $request->codigo;
-            $produto['descricao'] = $request->descricao;
+            $produto['id'] = isset($request['id']) ? $request['id'] : null;
+            $produto['codigo'] = $request['codigo'];
+            $produto['descricao'] = $request['descricao'];
 
             return $produto;
         }
